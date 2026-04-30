@@ -60,6 +60,7 @@ Pipeline n8n en 5 étapes :
 - **Économie estimée** : 50+ heures de travail rédactionnel
 
 ## Architecture du pipeline
+```
 CSV GSC simulé (50 requêtes)
 ↓
 [n8n] Filtre gap SEO (impressions > 100, clics < 10)
@@ -75,14 +76,17 @@ CSV GSC simulé (50 requêtes)
 [Google Docs] Publication article complet
 ↓
 [Google Sheets] Mise à jour statut + score + feedback
+```
 
 ## Structure du projet
+```
 seo-pipeline-digitallis/
 ├── data/
 │   └── gsc_digitallis_simule.csv
 ├── generate_gsc_data.py
 ├── workflow_n8n.json
 └── README.md
+```
 
 ## Auteur
 
