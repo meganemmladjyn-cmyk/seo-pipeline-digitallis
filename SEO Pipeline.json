@@ -1,0 +1,561 @@
+{
+  "name": "SEO Pipeline",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1d908e8d-5d12-4864-bee2-b2d2cb919a46",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/gsc_digitallis_simule.csv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "193780f9-9e18-43bc-a142-b5e77ab50287",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "8f147e2c-2765-47cf-a235-8e3aa725f0b2",
+      "name": "Extract from File",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e8c83bc4-1833-459a-ad89-1d2656124107",
+              "leftValue": "={{ $json.impressions }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "7a5a2e64-a9b3-43d3-88f6-631283f9fead",
+              "leftValue": "={{ $json.clics }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "77422448-6f99-4637-b667-f1df9b92f9ce",
+      "name": "Filter",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1jJawi2Fgmqz5AOXWQF3thA9RsPYbapomxPFr7LyP_eg/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1216270016,
+          "mode": "list",
+          "cachedResultName": "Article",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jJawi2Fgmqz5AOXWQF3thA9RsPYbapomxPFr7LyP_eg/edit#gid=1216270016"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ $json.query }}",
+            "titre": "={{ $json.titre }}",
+            "meta_description": "= {{ $json.meta_description }}",
+            "score": "={{ $json.score }}",
+            "seo": "={{ $json.seo }}",
+            "lisibilite": "={{ $json.lisibilite }}",
+            "pertinence": "={{ $json.pertinence }}",
+            "structure": "={{ $json.structure }}",
+            "feedback": "={{ $json.feedback }}",
+            "date_generation": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "titre",
+              "displayName": "titre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "meta_description",
+              "displayName": "meta_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "seo",
+              "displayName": "seo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lisibilite",
+              "displayName": "lisibilite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pertinence",
+              "displayName": "pertinence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "structure",
+              "displayName": "structure",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback",
+              "displayName": "feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_generation",
+              "displayName": "date_generation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2528,
+        0
+      ],
+      "id": "047aa1bd-091e-403b-b829-720fad306bfd",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "lddU6ir4cjnsZDct",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.content[0].text;\nconst clean = raw.replace(/```json\\n?/g, '').replace(/```/g, '').trim();\nconst article = JSON.parse(clean);\n\nconst query = $('Loop Over Items').first().json.query || \"\";\n\nreturn [{\n  json: {\n    query: query,\n    titre: article.titre || \"\",\n    meta_description: article.meta_description || \"\",\n    corps: article.corps || \"\",\n    mots_cles: (article.mots_cles_utilises || []).join(', ')\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "cc44aa40-b461-46cb-96b8-ce9740082061",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "=VOTRE_CLE_API_ICI"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 3000,\n  \"system\": \"Tu es une API JSON. Réponds UNIQUEMENT avec un objet JSON brut. Aucun texte avant ou après.\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Écris un article SEO de 800 mots EN FRANÇAIS sur ce sujet EXACT : {{ $json.query }}. Le titre DOIT contenir ce mot-clé exact. Retourne ce JSON : {\\\"titre\\\": \\\"...\\\", \\\"meta_description\\\": \\\"...\\\", \\\"corps\\\": \\\"...\\\", \\\"mots_cles_utilises\\\": [\\\"...\\\"]}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "23daf73d-a068-4d0d-80ca-763ec320aed6",
+      "name": "HTTP Request Sonnet",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        832,
+        0
+      ],
+      "id": "0a892317-21f6-4919-a85d-68e98a02b84e",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        0
+      ],
+      "id": "21856757-128c-43fe-a16f-a9290789bc9a",
+      "name": "Set"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "VOTRE_CLE_API_ICI"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-haiku-4-5-20251001\",\n  \"max_tokens\": 500,\n  \"system\": \"Tu es un évaluateur SEO. Retourne UNIQUEMENT un JSON valide sans markdown. Format : {\\\"score\\\": number, \\\"seo\\\": number, \\\"lisibilite\\\": number, \\\"pertinence\\\": number, \\\"structure\\\": number, \\\"feedback\\\": string}\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Évalue cet article pour le mot-clé '{{ $json.query || $json['﻿query'] }}'. Titre : {{ $json.titre }}. Mots-clés : {{ $json.mots_cles }}. Retourne uniquement le JSON.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1664,
+        0
+      ],
+      "id": "7fcc1295-d958-4dbf-97fa-8b148e870b38",
+      "name": "HTTP Request Haiku"
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst raw = response.content[0].text;\nconst clean = raw.replace(/```json\\n?/g, '').replace(/```/g, '').trim();\nconst evaluation = JSON.parse(clean);\n\nconst article = $('Set').first().json;\nconst sonnet = $('Code in JavaScript').first().json;\n\nreturn [{\n  json: {\n    query: sonnet.query || article.query || \"\",\n    titre: sonnet.titre || article.titre || \"\",\n    meta_description: sonnet.meta_description || article.meta_description || \"\",\n    corps: sonnet.corps || article.corps || \"\",\n    mots_cles: sonnet.mots_cles || article.mots_cles || \"\",\n    score: evaluation.score || 0,\n    seo: evaluation.seo || 0,\n    lisibilite: evaluation.lisibilite || 0,\n    pertinence: evaluation.pertinence || 0,\n    structure: evaluation.structure || 0,\n    feedback: evaluation.feedback || \"\",\n    date_generation: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        0
+      ],
+      "id": "404dc3fd-7e77-41fc-8ad2-62281e13fc70",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "={{ $json.titre }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2064,
+        -128
+      ],
+      "id": "db2e7101-f686-4bb0-ac93-600e82b06e4e",
+      "name": "Create a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "jAbNc3b6jM23X1oM",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Create a document').first().json.id }}",
+        "simple": false,
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('Code').first().json.corps }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2304,
+        -128
+      ],
+      "id": "ac5d7629-7e11-4e97-a150-5e312706d892",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "jAbNc3b6jM23X1oM",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Sonnet": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request Sonnet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Haiku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Haiku": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Create a document",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "65f68794-b07f-4b41-8fd8-b98984592555",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e5d570445fdf93f938d58f0ec7b3c99f4fd7649a2643c2e19b4aeda4cb816f3a"
+  },
+  "id": "A8E12LFApLnt7qKy",
+  "tags": []
+}
