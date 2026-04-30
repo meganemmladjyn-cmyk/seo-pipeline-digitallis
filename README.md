@@ -60,3 +60,35 @@ Pipeline n8n en 5 étapes :
 - **Économie estimée** : 50+ heures de travail rédactionnel
 
 ## Architecture du pipeline
+CSV GSC simulé (50 requêtes)
+↓
+[n8n] Filtre gap SEO (impressions > 100, clics < 10)
+↓
+[n8n] Push Google Sheets — file d'attente
+↓
+[Loop Over Items] Traitement article par article
+↓
+[Claude Sonnet] Génération article SEO structuré (JSON)
+↓
+[Claude Haiku] Scoring qualité /100
+↓
+[Google Docs] Publication article complet
+↓
+[Google Sheets] Mise à jour statut + score + feedback
+
+## Structure du projet
+seo-pipeline-digitallis/
+├── data/
+│   └── gsc_digitallis_simule.csv
+├── generate_gsc_data.py
+├── workflow_n8n.json
+└── README.md
+
+## Auteur
+
+**Mégane** — Data Marketing Analyst · Spécialiste Customer Insights 
+& Automatisation IA · Guadeloupe
+
+*Je transforme vos données clients en décisions concrètes et j'automatise 
+ce qui suit.*
+
